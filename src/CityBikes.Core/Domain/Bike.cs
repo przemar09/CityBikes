@@ -8,7 +8,7 @@ namespace CityBikes.Core
     public class Bike
     {
         public Guid Id { get; protected set; }
-        public string Name { get; protected set; }
+        public string Model { get; protected set; }
         public string Mark { get; protected set; }
         public BikeType BikeType { get; protected set; }
         public BikeLocalization Localization { get; protected set; }
@@ -21,10 +21,10 @@ namespace CityBikes.Core
         {
         }
 
-        public Bike(string name, string mark, BikeType bikeType, BikeLocalization localization)
+        public Bike(string model, string mark, BikeType bikeType, BikeLocalization localization)
         {
             Id = Guid.NewGuid();
-            Name = name;
+            Model = model;
             Mark = mark;
             BikeType = bikeType;
             Localization = localization;

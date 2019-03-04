@@ -6,8 +6,6 @@ namespace CityBikes.Core.Domain
 {
     public class StationLocalization : Localization
     {
-        public Guid Id { get; protected set; }
-
         protected StationLocalization() : base()
         {
 
@@ -15,7 +13,7 @@ namespace CityBikes.Core.Domain
 
         public StationLocalization(decimal longitude, decimal latitude) : base(longitude, latitude)
         {
-            Id = Guid.NewGuid();
+            
         }
     }
 }
