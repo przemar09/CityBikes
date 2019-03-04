@@ -6,7 +6,6 @@ namespace CityBikes.Core.Domain
 {
     public class Address
     {
-        public Guid Id { get; protected set; }
         public string Street { get; protected set; }
         public string StreetNumber { get; protected set; }
         public string PostalCode { get; protected set; }
@@ -20,7 +19,6 @@ namespace CityBikes.Core.Domain
 
         public Address(string street, string streetNumber, string postalCode, string city, string country)
         {
-            Id = Guid.NewGuid();
             Street = street;
             StreetNumber = streetNumber;
             PostalCode = postalCode;
