@@ -10,7 +10,11 @@ namespace CityBikes.Infrastructure.Repositories
 {
     public class InMemoryUserRepository : IUserRepository
     {
-        private ISet<User> _users = new HashSet<User>();
+        private static ISet<User> _users = new HashSet<User>
+        {
+            new User("User1", "Name1", "user1@email.com", "secret", "salt", null, null)
+        };
+        
 
         public async Task AddAsync(User user)
         {
@@ -25,7 +29,7 @@ namespace CityBikes.Infrastructure.Repositories
 
         public async Task<User> GetAsync(string email)
 
-            => await Task.FromResult(_users.SingleOrDefault(x => x.Email == email));
+            => await Task.FromResult(_users.SingleOrDefault(x => x.Email == email.ToLowerInvariant()));
 
         public async Task<IEnumerable<User>> GetAllAsync()
 

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CityBikes.Core.Repositories;
+using CityBikes.Infrastructure.Mappers;
+using CityBikes.Infrastructure.Repositories;
+using CityBikes.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +30,9 @@ namespace CityBikes.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

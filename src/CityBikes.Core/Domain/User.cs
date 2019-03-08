@@ -32,7 +32,7 @@ namespace CityBikes.Core.Domain
             Id = Guid.NewGuid();
             Name = name;
             LastName = lastName;
-            Email = email;
+            Email = email.ToLowerInvariant();
             Password = password;
             Salt = salt;
             Address = address;
