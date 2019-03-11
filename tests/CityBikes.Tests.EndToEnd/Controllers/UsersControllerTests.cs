@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using FluentAssertions;
@@ -10,7 +8,6 @@ using NUnit.Framework;
 using Newtonsoft.Json;
 using CityBikes.Infrastructure.DTO;
 using System.Threading.Tasks;
-using Xunit;
 using CityBikes.Infrastructure.Commands.Users;
 using System.Net;
 

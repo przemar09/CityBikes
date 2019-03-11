@@ -11,15 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace CityBikes.Api.Controllers
 {
     [Route("[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ApiControllerBase
     {
         private IUserService _userService;
-        private readonly ICommandDispatcher _commandDispatcher;
 
-        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher)
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher) 
+            : base(commandDispatcher)
         {
             _userService = userService;
-            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet("{email}")]
@@ -31,7 +30,7 @@ namespace CityBikes.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            await CommandDispatcher.DispatchAsync(command);
 
             return Created($"users/{command.Email}", new object());
         }
