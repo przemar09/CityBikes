@@ -15,11 +15,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using CityBikes.Infrastructure.IoC.Modules;
 
 namespace CityBikes.Api
 {
     public class Startup
     {
+        public IContainer ApplicationContainer { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,12 +33,18 @@ namespace CityBikes.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, InMemoryUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            builder.RegisterModule<CommandModule>();
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
