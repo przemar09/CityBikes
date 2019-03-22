@@ -4,18 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AB85DBC7-5D33-4EFC-8ABC-8CD3191E8E68}"
+	ProjectSection(SolutionItems) = preProject
+		src\CityBikes.Api\appsettings.Development.json = src\CityBikes.Api\appsettings.Development.json
+		src\CityBikes.Api\appsettings.json = src\CityBikes.Api\appsettings.json
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityBikes.Api", "src\CityBikes.Api\CityBikes.Api.csproj", "{103CA015-AD0B-4F3A-B12E-B0471BDE512D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityBikes.Core", "src\CityBikes.Core\CityBikes.Core.csproj", "{FFAD46F0-BCD7-45F8-B87A-F75F6C6225BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityBikes.Core", "src\CityBikes.Core\CityBikes.Core.csproj", "{FFAD46F0-BCD7-45F8-B87A-F75F6C6225BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityBikes.Infrastructure", "src\CityBikes.Infrastructure\CityBikes.Infrastructure.csproj", "{6F90EDBF-BF75-4325-B667-00FAA6C919E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityBikes.Infrastructure", "src\CityBikes.Infrastructure\CityBikes.Infrastructure.csproj", "{6F90EDBF-BF75-4325-B667-00FAA6C919E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4169CB4C-461D-40DF-9463-7D0478D1C10B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityBikes.Tests", "tests\CityBikes.Tests\CityBikes.Tests.csproj", "{4401C961-2657-44DA-A21A-6EB892E370FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityBikes.Tests", "tests\CityBikes.Tests\CityBikes.Tests.csproj", "{4401C961-2657-44DA-A21A-6EB892E370FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityBikes.Tests.EndToEnd", "tests\CityBikes.Tests.EndToEnd\CityBikes.Tests.EndToEnd.csproj", "{1AA9B38A-EB56-4F0C-B220-71A06E3BFB04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityBikes.Tests.EndToEnd", "tests\CityBikes.Tests.EndToEnd\CityBikes.Tests.EndToEnd.csproj", "{1AA9B38A-EB56-4F0C-B220-71A06E3BFB04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

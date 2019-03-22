@@ -12,18 +12,36 @@ namespace CityBikes.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEncrypter _encrypter;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
         {
             _userRepository = userRepository;
+            _encrypter = encrypter;
             _mapper = mapper;
         }
 
         public async Task<UserDto> GetAsync(string email)
         {
             var user = await _userRepository.GetAsync(email);
-            return _mapper.Map<User, UserDto>(user);            
+            return _mapper.Map<User, UserDto>(user);
+        }
+
+        public async Task LoginAsync(string email, string password)
+        {
+            var user = await _userRepository.GetAsync(email);
+            if (user == null)
+            {
+                throw new Exception("Invalid credentials.");
+            }
+            var salt = _encrypter.GetSalt(password);
+            var hash = _encrypter.GetHash(password, salt);
+            if(user.Password == hash)
+            {
+                return;
+            }
+            throw new Exception("Invalid credentials.");
         }
 
         public async Task RegisterAsync(string name, string lastName,
@@ -34,25 +52,10 @@ namespace CityBikes.Infrastructure.Services
             {
                 throw new Exception($"User with email: '{email}' already exists.");
             }
-            var salt = Guid.NewGuid().ToString("N");
-            user = new User(name, lastName, email, password, salt, null, null);
+            var salt = _encrypter.GetSalt(password);
+            var hash = _encrypter.GetHash(password, salt);
+            user = new User(name, lastName, email, hash, salt, null, null);
             await _userRepository.AddAsync(user);
         }
-        //public async Task RegisterAsync(string name, string lastName, 
-        //    string email, string password, string street, int number, int apartment, 
-        //    string postalCode, string city, string country)
-        //{
-        //    var user = await _userRepository.GetAsync(email);
-        //    if(user != null)
-        //    {
-        //        throw new Exception($"User with email: '{email}' already exists.");
-        //    }
-        //    var salt = Guid.NewGuid().ToString("N");
-        //    user = new User(name, lastName, email, password, salt, Address.Create(
-        //        street, number, apartment, postalCode, city, country), null);
-        //    await _userRepository.AddAsync(user);
-
-        //    await Task.CompletedTask;
-        //}
     }
 }

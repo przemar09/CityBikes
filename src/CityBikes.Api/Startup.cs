@@ -18,6 +18,10 @@ using Microsoft.Extensions.Options;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CityBikes.Infrastructure.IoC.Modules;
+using CityBikes.Infrastructure.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CityBikes.Api
 {
@@ -36,14 +40,15 @@ namespace CityBikes.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterModule<CommandModule>();
+            builder.RegisterModule(new ContainerModule(Configuration));
             ApplicationContainer = builder.Build();
+
+            ConfigureJwtAuthService(services);
+
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
@@ -59,9 +64,33 @@ namespace CityBikes.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        public void ConfigureJwtAuthService(IServiceCollection services)
+        {
+            //services.Configure<JwtSettings>(Configuration.GetSection(nameof(JwtSettings)));
+            //services.AddSingleton(Configuration);
+            var jwtSettings = Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = jwtSettings.Issuer,
+                ValidateAudience = false,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = tokenValidationParameters;
+            });
+            
         }
     }
 }
