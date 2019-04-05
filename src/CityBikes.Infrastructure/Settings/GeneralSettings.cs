@@ -4,8 +4,9 @@ using System.Text;
 
 namespace CityBikes.Infrastructure.Settings
 {
-    public class GenralSettings
+    public class GeneralSettings
     {
         public string Name { get; set; }
+        public bool SeedData { get; set; }
     }
 }

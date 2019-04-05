@@ -15,10 +15,10 @@ namespace CityBikes.Api.Controllers
     public class UsersController : ApiControllerBase
     {
         private IUserService _userService;
-        private readonly GenralSettings _genralSettings;
+        private readonly GeneralSettings _genralSettings;
 
         public UsersController(IUserService userService, ICommandDispatcher commandDispatcher,
-            GenralSettings genralSettings) 
+            GeneralSettings genralSettings) 
             : base(commandDispatcher)
         {
             _userService = userService;
@@ -26,7 +26,7 @@ namespace CityBikes.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<GenralSettings> Get()
+        public async Task<GeneralSettings> Get()
         {
             return _genralSettings;
         }

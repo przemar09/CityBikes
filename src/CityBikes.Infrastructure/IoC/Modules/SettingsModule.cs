@@ -20,7 +20,7 @@ namespace CityBikes.Infrastructure.IoC.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(_configuration
-                   .GetSettings<GenralSettings>())
+                   .GetSettings<GeneralSettings>())
                    .SingleInstance();
             builder.RegisterInstance(_configuration
                    .GetSettings<JwtSettings>())

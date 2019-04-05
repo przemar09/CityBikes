@@ -9,13 +9,8 @@ namespace CityBikes.Infrastructure.Services
     public interface IUserService : IService
     {
         Task<UserDto> GetAsync(string email);
-        Task RegisterAsync(string name, string lastName,
-            string email, string password);
+        Task RegisterAsync(Guid userId, string name, string lastName,
+            string email, string password, string role);
         Task LoginAsync(string email, string passowrd);
-        //Task RegisterAsync(string name, string lastName,
-        //    string email, string password, string street, int number, int apartment,
-        //    string postalCode, string city, string country);
-        // Task LoginAsync(string email, string password);
-        // Task<IEnumerable<UserDto>> BrowseAsync();
     }
 }

@@ -35,8 +35,7 @@ namespace CityBikes.Infrastructure.Services
             {
                 throw new Exception("Invalid credentials.");
             }
-            var salt = _encrypter.GetSalt(password);
-            var hash = _encrypter.GetHash(password, salt);
+            var hash = _encrypter.GetHash(password, user.Salt);
             if(user.Password == hash)
             {
                 return;
@@ -44,8 +43,8 @@ namespace CityBikes.Infrastructure.Services
             throw new Exception("Invalid credentials.");
         }
 
-        public async Task RegisterAsync(string name, string lastName,
-           string email, string password)
+        public async Task RegisterAsync(Guid userId, string name, string lastName,
+           string email, string password, string role)
         {
             var user = await _userRepository.GetAsync(email);
             if (user != null)
@@ -54,7 +53,7 @@ namespace CityBikes.Infrastructure.Services
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
-            user = new User(name, lastName, email, hash, salt, null, null);
+            user = new User(userId, name, lastName, email, hash, salt, role, null, null);
             await _userRepository.AddAsync(user);
         }
     }

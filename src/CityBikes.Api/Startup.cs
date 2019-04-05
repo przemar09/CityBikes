@@ -40,6 +40,7 @@ namespace CityBikes.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, InMemoryUserRepository>();
+            services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var builder = new ContainerBuilder();
@@ -66,6 +67,13 @@ namespace CityBikes.Api
             }
             app.UseAuthentication();
             app.UseHttpsRedirection();
+
+            var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+            if(generalSettings.SeedData)
+            {
+                var dataInitilizer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitilizer.SeedAsync();
+            }
             app.UseMvc();
         }
 

@@ -12,7 +12,7 @@ namespace CityBikes.Infrastructure.Repositories
     {
         private static ISet<User> _users = new HashSet<User>
         {
-            new User("User1", "Name1", "user1@email.com", "secret", "salt", null, null)
+            new User(Guid.NewGuid(), "User1", "Name1", "user1@email.com", "secret", "salt","admin", null, null)
         };
         
 

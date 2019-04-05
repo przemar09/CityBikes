@@ -19,7 +19,7 @@ namespace CityBikes.Infrastructure.Handlers.Users
 
         public async Task HandleAsync(CreateUser command)
         {
-            await _userService.RegisterAsync(command.Name, command.LastName, command.Email, command.Password);
+            await _userService.RegisterAsync(command.UserId, command.Name, command.LastName, command.Email, command.Password, command.Role);
         }
     }
 }

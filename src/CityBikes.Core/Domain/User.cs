@@ -12,6 +12,7 @@ namespace CityBikes.Core.Domain
         public string Email { get; protected set; }
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
+        public string Role { get; protected set; }
         public Address Address { get; protected set; }
         public Account Account { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
@@ -27,14 +28,15 @@ namespace CityBikes.Core.Domain
         }
 
         // Not sure if address and account should be passed by constructor
-        public User(string name, string lastName, string email, string password, string salt, Address address, Account account)
+        public User(Guid userId, string name, string lastName, string email, string password, string salt, string role, Address address, Account account)
         {
-            Id = Guid.NewGuid();
+            Id = userId;
             Name = name;
             LastName = lastName;
             Email = email.ToLowerInvariant();
             Password = password;
             Salt = salt;
+            Role = role;
             Address = address;
             Account = account;
             CreatedAt = DateTime.UtcNow;
