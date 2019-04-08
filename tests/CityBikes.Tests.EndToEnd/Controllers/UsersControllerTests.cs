@@ -10,6 +10,7 @@ using CityBikes.Infrastructure.DTO;
 using System.Threading.Tasks;
 using CityBikes.Infrastructure.Commands.Users;
 using System.Net;
+using Microsoft.AspNetCore;
 
 namespace CityBikes.Tests.EndToEnd.Controllers
 {
@@ -20,8 +21,8 @@ namespace CityBikes.Tests.EndToEnd.Controllers
 
         public UsersControllerTests()
         {
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+            var webhost = WebHost.CreateDefaultBuilder().UseStartup<Startup>();
+            _server = new TestServer(webhost);
             _client = _server.CreateClient();
         }
 
